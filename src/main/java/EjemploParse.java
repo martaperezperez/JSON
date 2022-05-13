@@ -3,22 +3,32 @@ import org.json.JSONObject;
 
 
 public class EjemploParse {
-    static String json = "\n" +
-            "{\n" +
-            "    \"pageInfo\": {\n" +
-            "            \"pageName\": \"Homepage\",\n" +
-            "            \"logo\": \"https://www.example.com/logo.jpg\"\n" +
-            "    },\n" +
-            "    \"posts\": [\n" +
-            "            {\n" +
-            "                \"post_id\": \"0123456789\",\n" +
+    static String json = "" +
+            "{" +
+            "    \"pageInfo\": {" +
+            "            \"pageName\": \"Homepage\"," +
+            "            \"logo\": \"https://www.example.com/logo.jpg\"" +
+            "    }," +
+            "    \"posts\": [" +
+            "            {" +
+            "                \"post_id\": \"0123456789\"," +
             "                \"actor_id\": \"1001\",\n" +
-            "                \"author_name\": \"Jane Doe\",\n" +
-            "                \"post_title\": \"How to parse JSON in Java\",\n" +
-            "                \"comments\": [],\n" +
-            "                \"time_of_post\": \"1234567890\"\n" +
-            "            }\n" +
-            "    ]\n" +
+            "                \"author_name\": \"Jane Doe\"," +
+            "                \"post_title\": \"How to parse JSON in Java\"," +
+            "                \"comments\": []," +
+            "                \"time_of_post\": \"1234567890\"" +
+            "            }," +
+
+         "            {" +
+         "                \"post_id\": \"1234567890\"," +
+         "                \"actor_id\": \"1001\",\n" +
+         "                \"author_name\": \"Jane Doe\"," +
+         "                \"post_title\": \"How to parse JSON in Java\"," +
+         "                \"comments\": [\"Hola\"]," +
+         "                \"time_of_post\": \"1234567890\"" +
+         "            }" +
+            "    ]" +
+
             "}";
     public static void main(String[] args) {
  /* String cadenaJSON = "{ " +
@@ -40,7 +50,7 @@ public class EjemploParse {
         String correo= mm.getJSONObject("data").getString("email");
 
         Boolean vivo= mm.getJSONObject("data").getBoolean("vivo");
-        System.out.println(correo);*/
+        System.out.println(correo);
 
         JSONObject obj = new JSONObject(json);
         String pageName = obj.getJSONObject("pageInfo").getString("pageName");
@@ -52,7 +62,20 @@ public class EjemploParse {
         JSONArray arr = obj.getJSONArray("posts");
         for (int i = 0; i < arr.length(); i++) {
             String post_id = arr.getJSONObject(i).getString("post_id");
-            System.out.println(post_id);
+            System.out.println(post_id);*/
+
+            JSONObject obj = new JSONObject(json);
+            String pageName = obj.getJSONObject("pageInfo").getString("pageName");
+
+            System.out.println(pageName);
+
+
+
+            JSONArray arr = obj.getJSONArray("posts");
+            for (int i = 0; i < arr.length(); i++) {
+                String post_id = arr.getJSONObject(i).getString("post_id");
+                JSONArray comments = arr.getJSONObject(i).getJSONArray("comments");
+                System.out.println(post_id);
         }
     }
 }
