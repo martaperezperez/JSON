@@ -1,82 +1,41 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class EjemploParse {
-    static String json = "" +
-            "{" +
-            "    \"pageInfo\": {" +
-            "            \"pageName\": \"Homepage\"," +
-            "            \"logo\": \"https://www.example.com/logo.jpg\"" +
-            "    }," +
-            "    \"posts\": [" +
-            "            {" +
-            "                \"post_id\": \"0123456789\"," +
-            "                \"actor_id\": \"1001\",\n" +
-            "                \"author_name\": \"Jane Doe\"," +
-            "                \"post_title\": \"How to parse JSON in Java\"," +
-            "                \"comments\": []," +
-            "                \"time_of_post\": \"1234567890\"" +
-            "            }," +
 
-         "            {" +
-         "                \"post_id\": \"1234567890\"," +
-         "                \"actor_id\": \"1001\",\n" +
-         "                \"author_name\": \"Jane Doe\"," +
-         "                \"post_title\": \"How to parse JSON in Java\"," +
-         "                \"comments\": [\"Hola\"]," +
-         "                \"time_of_post\": \"1234567890\"" +
-         "            }" +
-            "    ]" +
+    public static void main(String args[]) throws URISyntaxException, IOException, InterruptedException {
 
-            "}";
-    public static void main(String[] args) {
- /* String cadenaJSON = "{ " +
-        "   \"data\": {" +
-        "   \"id\": 2," +
-        "   \"email\": \"janet.weaver@reqres.in\"," +
-        "   \"first_name\": [\"Janet\",\"Brown\"]," +
-        "   \"vivo\": \"false\"," +
-        "   \"avatar\": \"https://reqres.in/img/faces/2-image.jpg\"" +
-        "   }," +
-        "   \"support\": {" +
-        "   \"url\": \"https://reqres.in/#support-heading\"," +
-        "   \"text\": \"To keep ReqRes free, contributions towards server costs are appreciated!\"" +
-        "   }" +
-        "}";
+        // creamos la petición
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://jsonplaceholder.typicode.com/todos/1"))
+                .GET()
+                .build();
 
-        JSONObject mm= new JSONObject(cadenaJSON);
+        // creamos el cliente
+        HttpClient client = HttpClient.newHttpClient();
 
-        String correo= mm.getJSONObject("data").getString("email");
+        // Enviamos la petición y obtenemos la respuesta
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Boolean vivo= mm.getJSONObject("data").getBoolean("vivo");
-        System.out.println(correo);
+        // Mostramos el cuerpo de la respuesta
+        System.out.println(response.body());
 
-        JSONObject obj = new JSONObject(json);
-        String pageName = obj.getJSONObject("pageInfo").getString("pageName");
-
-        System.out.println(pageName);
-
-
-
+        /*String cadenaJSON = "";
+        JSONObject obj = new JSONObject(cadenaJSON);
+        String vivo = obj.getJSONObject("pageInfo").getString("pageName");
         JSONArray arr = obj.getJSONArray("posts");
         for (int i = 0; i < arr.length(); i++) {
             String post_id = arr.getJSONObject(i).getString("post_id");
-            System.out.println(post_id);*/
-
-            JSONObject obj = new JSONObject(json);
-            String pageName = obj.getJSONObject("pageInfo").getString("pageName");
-
-            System.out.println(pageName);
-
-
-
-            JSONArray arr = obj.getJSONArray("posts");
-            for (int i = 0; i < arr.length(); i++) {
-                String post_id = arr.getJSONObject(i).getString("post_id");
-                JSONArray comments = arr.getJSONObject(i).getJSONArray("comments");
-                System.out.println(post_id);
+            System.out.println(post_id);
         }
+        System.out.println(vivo);*/
     }
 }
 
